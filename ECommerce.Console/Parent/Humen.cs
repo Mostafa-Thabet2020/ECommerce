@@ -1,12 +1,12 @@
-﻿using ECommerce.Console.Audits;
-using ECommerce.Console.Models;
+﻿using Audits;
+using Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ECommerce.Console.Parent
+namespace Parent
 {
     public abstract class Humen:Audit
     {

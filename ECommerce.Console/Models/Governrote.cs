@@ -1,11 +1,11 @@
-﻿using ECommerce.Console.Audits;
+﻿using Audits;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ECommerce.Console.Models
+namespace Models
 {
     public class Governrote:Audit
     {

@@ -1,10 +1,11 @@
-﻿using ECommerce.Console.Models;
+﻿using Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ECommerce.Console.Models;
 
 namespace ECommerce.Console
 {
@@ -21,5 +22,6 @@ namespace ECommerce.Console
         public DbSet<Mobile> mobiles { get; set; }
         public DbSet<User> users { get; set; }
         public DbSet<Address> addresses { get; set; }
+        public DbSet<Product> products { get; set; }
     }
 }

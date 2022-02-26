@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ECommerce.Console.Repository
+namespace Repository
 {
     public interface IGenericCRUD<T> where T : class
     {

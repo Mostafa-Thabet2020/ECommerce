@@ -1,12 +1,13 @@
-﻿using ECommerce.Console.Models;
-using ECommerce.Console.Repository;
+﻿using ECommerce.Console;
+using Models;
+using Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ECommerce.Console.Services
+namespace Services
 {
     public class GovernroteService : IGenericCRUD<Governrote>,IValidation<Governrote>
     {

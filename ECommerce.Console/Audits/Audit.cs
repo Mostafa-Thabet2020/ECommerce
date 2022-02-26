@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ECommerce.Console.Bases;
-namespace ECommerce.Console.Audits
+using Bases;
+namespace Audits
 {
     public class Audit:Base
     {
+        public int? CreatedBy { get; set; }
         public DateTime CreatedDate { get; set; }
-        public DateTime ModifiedDate { get; set; }=DateTime.Now;
+        public int? LastModifiedBy { get; set; }
+        public DateTime LastModifiedDate { get; set; }=DateTime.Now;
     }
 }

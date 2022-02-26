@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace ECommerce.Console.Migrations
+namespace Migrations
 {
     [DbContext(typeof(EcommorceDbContext))]
     partial class EcommorceDbContextModelSnapshot : ModelSnapshot
@@ -22,7 +22,51 @@ namespace ECommerce.Console.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("ECommerce.Console.Models.Address", b =>
+            modelBuilder.Entity("ECommerce.Console.Models.Product", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<double?>("Cost")
+                        .HasColumnType("float");
+
+                    b.Property<int?>("CreatedBy")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDisplay")
+                        .HasColumnType("bit");
+
+                    b.Property<int?>("LastModifiedBy")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("LastModifiedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<double>("Price")
+                        .HasColumnType("float");
+
+                    b.Property<string>("ProductName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("ProductionDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<double?>("Profit")
+                        .HasColumnType("float");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("products");
+                });
+
+            modelBuilder.Entity("Models.Address", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -42,6 +86,12 @@ namespace ECommerce.Console.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("CitiyId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("CreatedBy")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
@@ -49,25 +99,25 @@ namespace ECommerce.Console.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("ModifiedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("cityId")
+                    b.Property<int?>("LastModifiedBy")
                         .HasColumnType("int");
 
-                    b.Property<int>("userId")
+                    b.Property<DateTime>("LastModifiedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("UserId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("cityId");
+                    b.HasIndex("CitiyId");
 
-                    b.HasIndex("userId");
+                    b.HasIndex("UserId");
 
                     b.ToTable("addresses");
                 });
 
-            modelBuilder.Entity("ECommerce.Console.Models.City", b =>
+            modelBuilder.Entity("Models.City", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -75,27 +125,33 @@ namespace ECommerce.Console.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<int?>("CreatedBy")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("ModifiedDate")
+                    b.Property<int>("GovernroteId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("LastModifiedBy")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("LastModifiedDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("governroteId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("governroteId");
+                    b.HasIndex("GovernroteId");
 
                     b.ToTable("cities");
                 });
 
-            modelBuilder.Entity("ECommerce.Console.Models.Governrote", b =>
+            modelBuilder.Entity("Models.Governrote", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -103,10 +159,16 @@ namespace ECommerce.Console.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<int?>("CreatedBy")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("ModifiedDate")
+                    b.Property<int?>("LastModifiedBy")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("LastModifiedDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
@@ -118,7 +180,7 @@ namespace ECommerce.Console.Migrations
                     b.ToTable("governrotes");
                 });
 
-            modelBuilder.Entity("ECommerce.Console.Models.Mobile", b =>
+            modelBuilder.Entity("Models.Mobile", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -126,21 +188,33 @@ namespace ECommerce.Console.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<int?>("CreatedBy")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("LastModifiedBy")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("LastModifiedDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("MobileNumber")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("userId")
+                    b.Property<int>("UserId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("userId");
+                    b.HasIndex("UserId");
 
                     b.ToTable("mobiles");
                 });
 
-            modelBuilder.Entity("ECommerce.Console.Models.User", b =>
+            modelBuilder.Entity("Models.User", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -151,19 +225,29 @@ namespace ECommerce.Console.Migrations
                     b.Property<DateTime>("BirthDay")
                         .HasColumnType("datetime2");
 
+                    b.Property<int?>("CreatedBy")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("LastModifiedBy")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("LastModifiedDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("LastName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("ModifiedDate")
-                        .HasColumnType("datetime2");
 
                     b.Property<string>("Password")
                         .IsRequired()
@@ -178,17 +262,17 @@ namespace ECommerce.Console.Migrations
                     b.ToTable("users");
                 });
 
-            modelBuilder.Entity("ECommerce.Console.Models.Address", b =>
+            modelBuilder.Entity("Models.Address", b =>
                 {
-                    b.HasOne("ECommerce.Console.Models.City", "city")
+                    b.HasOne("Models.City", "city")
                         .WithMany("addresses")
-                        .HasForeignKey("cityId")
+                        .HasForeignKey("CitiyId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ECommerce.Console.Models.User", "user")
+                    b.HasOne("Models.User", "user")
                         .WithMany("addresses")
-                        .HasForeignKey("userId")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -197,39 +281,39 @@ namespace ECommerce.Console.Migrations
                     b.Navigation("user");
                 });
 
-            modelBuilder.Entity("ECommerce.Console.Models.City", b =>
+            modelBuilder.Entity("Models.City", b =>
                 {
-                    b.HasOne("ECommerce.Console.Models.Governrote", "governrote")
+                    b.HasOne("Models.Governrote", "governrote")
                         .WithMany("cities")
-                        .HasForeignKey("governroteId")
+                        .HasForeignKey("GovernroteId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("governrote");
                 });
 
-            modelBuilder.Entity("ECommerce.Console.Models.Mobile", b =>
+            modelBuilder.Entity("Models.Mobile", b =>
                 {
-                    b.HasOne("ECommerce.Console.Models.User", "user")
+                    b.HasOne("Models.User", "user")
                         .WithMany("mobiles")
-                        .HasForeignKey("userId")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("user");
                 });
 
-            modelBuilder.Entity("ECommerce.Console.Models.City", b =>
+            modelBuilder.Entity("Models.City", b =>
                 {
                     b.Navigation("addresses");
                 });
 
-            modelBuilder.Entity("ECommerce.Console.Models.Governrote", b =>
+            modelBuilder.Entity("Models.Governrote", b =>
                 {
                     b.Navigation("cities");
                 });
 
-            modelBuilder.Entity("ECommerce.Console.Models.User", b =>
+            modelBuilder.Entity("Models.User", b =>
                 {
                     b.Navigation("addresses");
 
