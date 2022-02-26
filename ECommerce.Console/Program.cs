@@ -8,7 +8,8 @@ using Services;
 using Shared;
 
 Console.WriteLine("Hello, from ECommerce");
-ConsoleService.UserDealing(UserType.GeneralUser);
+
+ConsoleService.UserDealing();
 
 #region Examples
 // instance
@@ -54,7 +55,7 @@ ConsoleService.UserDealing(UserType.GeneralUser);
 //}
 #endregion
 
-//#region single object
+#region single object
 ////SingleOrDefault() 
 //City doki = dbContext.cities.Where(x => x.Id == 4).SingleOrDefault();
 //City dokiLinq = (from city in dbContext.cities
@@ -72,7 +73,7 @@ ConsoleService.UserDealing(UserType.GeneralUser);
 
 //City LastRowbyName = dbContext.cities.OrderByDescending(x => x.Name).LastOrDefault();
 //Console.WriteLine($"Last row by name \n id:{LastRowbyName.Id}. Name: {LastRowbyName.Name}");
-//#endregion
+#endregion
 
 //int CountOfCitiesRows = dbContext.cities.Count();
 //Console.WriteLine($"count of cities {CountOfCitiesRows}");

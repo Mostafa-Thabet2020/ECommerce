@@ -11,5 +11,6 @@ namespace ECommerce.Console.Consts
         public static string AdminName ="Admin";
         public static string AdminPassword = "Admin2022";
         public static string AdminEmail= "Admin2022@gmail.com";
+        public static string AdminRole= "AdminRole";
     }
 }

@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace Migrations
+namespace ECommerce.Console.Migrations
 {
     [DbContext(typeof(EcommorceDbContext))]
     partial class EcommorceDbContextModelSnapshot : ModelSnapshot
@@ -21,6 +21,87 @@ namespace Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+
+            modelBuilder.Entity("ECommerce.Console.Models.Order", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int?>("CreatedBy")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Descripation")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("LastModifiedBy")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("LastModifiedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<double>("Total")
+                        .HasColumnType("float");
+
+                    b.Property<int>("UserID")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserID");
+
+                    b.ToTable("Order");
+                });
+
+            modelBuilder.Entity("ECommerce.Console.Models.OrderDetails", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int?>("CreatedBy")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("LastModifiedBy")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("LastModifiedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<double>("Price")
+                        .HasColumnType("float");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.Property<double>("Total")
+                        .HasColumnType("float");
+
+                    b.Property<int>("orderId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("productId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("orderId");
+
+                    b.HasIndex("productId");
+
+                    b.ToTable("OrderDetails");
+                });
 
             modelBuilder.Entity("ECommerce.Console.Models.Product", b =>
                 {
@@ -64,6 +145,23 @@ namespace Migrations
                     b.HasKey("Id");
 
                     b.ToTable("products");
+                });
+
+            modelBuilder.Entity("ECommerce.Console.Models.UserRole", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("userRoles");
                 });
 
             modelBuilder.Entity("Models.Address", b =>
@@ -257,9 +355,44 @@ namespace Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("UserRoleId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
+                    b.HasIndex("UserRoleId");
+
                     b.ToTable("users");
+                });
+
+            modelBuilder.Entity("ECommerce.Console.Models.Order", b =>
+                {
+                    b.HasOne("Models.User", "user")
+                        .WithMany("orders")
+                        .HasForeignKey("UserID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("user");
+                });
+
+            modelBuilder.Entity("ECommerce.Console.Models.OrderDetails", b =>
+                {
+                    b.HasOne("ECommerce.Console.Models.Order", "order")
+                        .WithMany("orderDetails")
+                        .HasForeignKey("orderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ECommerce.Console.Models.Product", "product")
+                        .WithMany()
+                        .HasForeignKey("productId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("order");
+
+                    b.Navigation("product");
                 });
 
             modelBuilder.Entity("Models.Address", b =>
@@ -303,6 +436,27 @@ namespace Migrations
                     b.Navigation("user");
                 });
 
+            modelBuilder.Entity("Models.User", b =>
+                {
+                    b.HasOne("ECommerce.Console.Models.UserRole", "userRole")
+                        .WithMany("users")
+                        .HasForeignKey("UserRoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("userRole");
+                });
+
+            modelBuilder.Entity("ECommerce.Console.Models.Order", b =>
+                {
+                    b.Navigation("orderDetails");
+                });
+
+            modelBuilder.Entity("ECommerce.Console.Models.UserRole", b =>
+                {
+                    b.Navigation("users");
+                });
+
             modelBuilder.Entity("Models.City", b =>
                 {
                     b.Navigation("addresses");
@@ -318,6 +472,8 @@ namespace Migrations
                     b.Navigation("addresses");
 
                     b.Navigation("mobiles");
+
+                    b.Navigation("orders");
                 });
 #pragma warning restore 612, 618
         }

@@ -1,4 +1,5 @@
-﻿using Parent;
+﻿using ECommerce.Console.Models;
+using Parent;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -15,7 +16,11 @@ namespace Models
         [NotMapped]
         public string ConfirmPassword { get; set; }
         public string Email { get; set; }
+        public int UserRoleId { get; set; }
+        [ForeignKey("UserRoleId")]
+        public UserRole userRole { get; set; }
         public List<Mobile> mobiles { get; set; }
         public List<Address> addresses { get; set; }
+        public List<Order> orders { get; set; }
     }
 }

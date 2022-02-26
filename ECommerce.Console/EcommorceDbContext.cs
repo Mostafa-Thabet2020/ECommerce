@@ -23,5 +23,8 @@ namespace ECommerce.Console
         public DbSet<User> users { get; set; }
         public DbSet<Address> addresses { get; set; }
         public DbSet<Product> products { get; set; }
+        public DbSet<UserRole> userRoles { get; set; }
+        public DbSet<Order> orders { get; set; }
+        public DbSet<OrderDetails> orderDetails { get; set; }
     }
 }

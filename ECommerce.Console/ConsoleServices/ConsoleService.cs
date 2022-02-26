@@ -16,68 +16,53 @@ namespace ConsoleServices
     public static class ConsoleService
     {
 
-        public static void UserDealing(UserType userType)
+        public static void UserDealing()
         {
-            if (userType == UserType.GeneralUser)
+            SeedDate();
+            Console.WriteLine("Are you current user? true or false");
+            bool IsCurrent = Convert.ToBoolean(Console.ReadLine());
+            User user = new User();
+            if (IsCurrent)
             {
-                GeneralUserDealing();
-            }
-            else
-            {
-                AdminUserDealing();
-            }
-        }
-        private static void GeneralUserDealing()
-        {
-            UserService userService = new UserService();
-            User user = new User(); // to identify current user
-
-            for (; ; )//infinity loop
-            {
-                Console.WriteLine("Are you current user? true or false");
-                bool IsCurrent = Convert.ToBoolean(Console.ReadLine());
-                if (IsCurrent)
+                user = LoginForm();
+                if (user.userRole.Name == Admin.AdminRole)
                 {
-                    Console.WriteLine("Insert your username");
-                    string Username = Console.ReadLine();
-                    Console.WriteLine("Insert your password");
-                    string Password = Console.ReadLine();
-
-                    user = userService.LogIn(Username, Password);
-                    if (user == null)
-                    {
-
-                    }
-                    else
-                    {
-                        Console.WriteLine($"Hello {user.FirstName}\n");
-                        Console.WriteLine("Please insert number of action\n" +
-                            "1. view products\n" +
-                            "2. update profile\n" +
-                            "3. view card");
-                        int ActionNumber = Convert.ToInt32(Console.ReadLine());
-                        switch (ActionNumber)
-                        {
-                            case 1:
-                                ViewProducts();
-                                break;
-                            case 2:
-                                UpdateProfile(user);
-                                break;
-                            case 3:
-                                ViewCard();
-                                break;
-                            default:
-                                break;
-                        }
-
-                    }
+                    AdminUserDealing(user);
                 }
                 else
                 {
-                    RegisterUser();
+                    GeneralUserDealing(user);
                 }
+            }
+            else
+            {
+                user = RegisterUser();
+            }
+        }
 
+        private static void SeedDate()
+        {
+            UserService userService = new UserService();
+
+            User user = new User();
+            UserRoleService userRoleService = new UserRoleService();
+            UserRole UserAmin = new UserRole();
+            UserAmin.Name = Admin.AdminRole;
+            userRoleService.Add(UserAmin);
+
+            UserRole GeneralUser = new UserRole();
+            GeneralUser.Name = "GeneralUser";
+            userRoleService.Add(GeneralUser);
+            if (!userService.IsExist(Admin.AdminName, Admin.AdminPassword))
+            {
+                user.UserName = Admin.AdminName;
+                user.FirstName = Admin.AdminName;
+                user.LastName = Admin.AdminName;
+                user.Password = Admin.AdminPassword;
+                user.ConfirmPassword = Admin.AdminPassword;
+                user.Email = Admin.AdminEmail;
+                user.UserRoleId = 1;
+                userService.Add(user);
             }
         }
 
@@ -86,30 +71,11 @@ namespace ConsoleServices
             throw new NotImplementedException();
         }
 
-        private static void UpdateProfile(User user)
-        {
-            ViewProfile(user);
-        }
 
-        private static void ViewProfile(User user)
-        {
-            Console.WriteLine($"first name {user.FirstName}\n" +
-                $"last name {user.LastName}" +
-                $"user name {user.UserName}" +
-                $"birthday {user.BirthDay}" +
-                $"Email {user.Email}");
-        }
 
-        private static void ViewProducts()
-        {
-            ProductService productService = new ProductService();
-            List<Product> products = productService.Get();
-            foreach (var product in products)
-            {
-                DisplayProduct(product);
-            }
-        }
 
+
+        #region User
         private static User RegisterUser()
         {
             UserService userService = new UserService();
@@ -131,6 +97,7 @@ namespace ConsoleServices
                 user.Password = Console.ReadLine();
                 Console.WriteLine("Please Confirm password");
                 user.ConfirmPassword = Console.ReadLine();
+                user.UserRoleId = 2;
                 #endregion
                 userService.Add(user);
                 user = userService.LogIn(user.UserName, user.Password);
@@ -146,39 +113,55 @@ namespace ConsoleServices
             }
             return user;
         }
-        private static void AdminUserDealing()
+        private static void GeneralUserDealing(User user)
         {
-            //make sure admin account is exist
-            UserService userService = new UserService();
-            User user = new User();
-            if (!userService.IsExist(Admin.AdminName, Admin.AdminPassword))
+            for (; ; )//infinity loop
             {
-                user.UserName = Admin.AdminName;
-                user.FirstName = Admin.AdminName;
-                user.LastName = Admin.AdminName;
-                user.Password = Admin.AdminPassword;
-                user.ConfirmPassword = Admin.AdminPassword;
-                user.Email = Admin.AdminEmail;
-
-                userService.Add(user);
-            }
-            for (; ; )
-            {
-                Console.WriteLine("Insert your username");
-                string Username = Console.ReadLine();
-                Console.WriteLine("Insert your password");
-                string Password = Console.ReadLine();
-                user = userService.LogIn(Username, Password);
                 if (user == null)
                 {
-                    Console.WriteLine("your username or password is wrong please try again");
 
                 }
                 else
                 {
-                    break;
+                    Console.WriteLine($"Hello {user.FirstName}\n");
+                    Console.WriteLine("Please insert number of action\n" +
+                        "1. view products\n" +
+                        "2. update profile\n" +
+                        "3. view card");
+                    int ActionNumber = Convert.ToInt32(Console.ReadLine());
+                    switch (ActionNumber)
+                    {
+                        case 1:
+                            ViewProducts();
+                            break;
+                        case 2:
+                            UpdateProfile(user);
+                            break;
+                        case 3:
+                            ViewCard();
+                            break;
+                        default:
+                            break;
+                    }
+
                 }
             }
+        }
+        private static User LoginForm()
+        {
+            UserService userService = new UserService();
+            User user;
+            Console.WriteLine("Insert your username");
+            string Username = Console.ReadLine();
+            Console.WriteLine("Insert your password");
+            string Password = Console.ReadLine();
+
+            user = userService.LogIn(Username, Password);
+            return user;
+        }
+        private static void AdminUserDealing(User user)
+        {
+            
             Console.WriteLine($"Wellcome {user.UserName}!");
             for (; ; )
             {
@@ -213,7 +196,30 @@ namespace ConsoleServices
                 }
             }
         }
+        private static void ViewProfile(User user)
+        {
+            Console.WriteLine($"first name {user.FirstName}\n" +
+                $"last name {user.LastName}\n" +
+                $"user name {user.UserName}\n" +
+                $"birthday {user.BirthDay}\n" +
+                $"Email {user.Email}\n");
+        }
+        private static void UpdateProfile(User user)
+        {
+            ViewProfile(user);
+        }
 
+        #endregion
+        #region Product
+        private static void ViewProducts()
+        {
+            ProductService productService = new ProductService();
+            List<Product> products = productService.Get();
+            foreach (var product in products)
+            {
+                DisplayProduct(product);
+            }
+        }
         private static void DectiveProduct()
         {
             Console.WriteLine("Insert product id ");
@@ -259,7 +265,7 @@ namespace ConsoleServices
             Console.WriteLine("All product\n_______________\n");
             foreach (var product in products)
             {
-                DisplayProduct(product,true);
+                DisplayProduct(product, true);
             }
         }
 
@@ -281,5 +287,6 @@ namespace ConsoleServices
                    $"price {product.Price}\n\n");
             }
         }
+        #endregion
     }
 }

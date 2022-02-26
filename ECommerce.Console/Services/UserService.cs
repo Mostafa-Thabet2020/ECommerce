@@ -108,7 +108,7 @@ namespace Services
             if (IsExist(UserName.ToUpper(), Password.ToUpper()))
             {
                 return dbContext.users.Where(x => x.UserName == UserName && x.Password == Password)
-                    .Include(x => x.addresses).Include(x => x.mobiles).FirstOrDefault();
+                    .Include(x => x.addresses).Include(x => x.mobiles).Include(x=>x.userRole).FirstOrDefault();
             }
             return null;
         }
