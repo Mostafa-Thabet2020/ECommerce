@@ -1,14 +1,21 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using ConsoleServices;
 using ECommerce.Console;
+using ECommerce.Console.Consts;
+using ECommerce.Console.Models;
 using Microsoft.EntityFrameworkCore;
 using Models;
 using Parent;
 using Services;
 using Shared;
 
-Console.WriteLine("Hello, from ECommerce");
 
+//CityService cityService = new CityService();
+//City city = new City();
+//city.Name = "Maadi";
+//city.GovernroteId = 3;
+//cityService.Add(city);
+//Console.WriteLine("added");
 ConsoleService.UserDealing();
 
 #region Examples

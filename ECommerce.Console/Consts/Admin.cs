@@ -8,9 +8,9 @@ namespace ECommerce.Console.Consts
 {
     public static class Admin
     {
-        public static string AdminName ="Admin";
-        public static string AdminPassword = "Admin2022";
-        public static string AdminEmail= "Admin2022@gmail.com";
-        public static string AdminRole= "AdminRole";
+        public const string AdminName ="Admin";
+        public const string AdminPassword = "Admin2022";
+        public const string AdminEmail= "Admin2022@gmail.com";
+        public const string AdminRole= "AdminRole";
     }
 }

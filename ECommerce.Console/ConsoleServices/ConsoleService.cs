@@ -18,6 +18,9 @@ namespace ConsoleServices
 
         public static void UserDealing()
         {
+            Console.WriteLine($"Welcome {ProjectDetails.ProjectName}\n" +
+                $"{ProjectDetails.ProjectVersion}\n" +
+                $"{ProjectDetails.ProjectDescription}\n\n");
             SeedDate();
             Console.WriteLine("Are you current user? true or false");
             bool IsCurrent = Convert.ToBoolean(Console.ReadLine());
@@ -46,6 +49,7 @@ namespace ConsoleServices
 
             User user = new User();
             UserRoleService userRoleService = new UserRoleService();
+
             UserRole UserAmin = new UserRole();
             UserAmin.Name = Admin.AdminRole;
             userRoleService.Add(UserAmin);
@@ -53,6 +57,7 @@ namespace ConsoleServices
             UserRole GeneralUser = new UserRole();
             GeneralUser.Name = "GeneralUser";
             userRoleService.Add(GeneralUser);
+
             if (!userService.IsExist(Admin.AdminName, Admin.AdminPassword))
             {
                 user.UserName = Admin.AdminName;
@@ -64,6 +69,10 @@ namespace ConsoleServices
                 user.UserRoleId = 1;
                 userService.Add(user);
             }
+            GovernroteService governroteService = new GovernroteService();
+            Governrote governrote = new Governrote();
+            governrote.Name = "Cairo";
+            governroteService.Add(governrote);
         }
 
         private static void ViewCard()
@@ -123,7 +132,7 @@ namespace ConsoleServices
                 }
                 else
                 {
-                    Console.WriteLine($"Hello {user.FirstName}\n");
+                    Console.WriteLine($"Hello {user.FullName}\n");
                     Console.WriteLine("Please insert number of action\n" +
                         "1. view products\n" +
                         "2. update profile\n" +
@@ -162,7 +171,7 @@ namespace ConsoleServices
         private static void AdminUserDealing(User user)
         {
             
-            Console.WriteLine($"Wellcome {user.UserName}!");
+            Console.WriteLine($"Wellcome {user.FullName}!");
             for (; ; )
             {
                 Console.WriteLine("Please choose number of action\n-----\n" +
@@ -249,11 +258,11 @@ namespace ConsoleServices
             Product product = new Product();
             Console.WriteLine("Isert name of product");
             product.ProductName = Console.ReadLine();
-            Console.WriteLine("Isert name of cost");
+            Console.WriteLine("Isert cost");
             product.Cost = Convert.ToDouble(Console.ReadLine());
-            Console.WriteLine("Isert name of Price");
+            Console.WriteLine("Isert Price");
             product.Price = Convert.ToDouble(Console.ReadLine());
-            Console.WriteLine("Isert name of Production date");
+            Console.WriteLine("Isert Production date");
             product.ProductionDate = Convert.ToDateTime(Console.ReadLine());
             return product;
         }
@@ -263,7 +272,7 @@ namespace ConsoleServices
             ProductService productService = new ProductService();
             List<Product> products = productService.GetAll();
             Console.WriteLine("All product\n_______________\n");
-            foreach (var product in products)
+            foreach (Product product in products)
             {
                 DisplayProduct(product, true);
             }

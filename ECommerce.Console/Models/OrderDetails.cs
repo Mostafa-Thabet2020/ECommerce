@@ -19,7 +19,9 @@ namespace ECommerce.Console.Models
         [ForeignKey("productId")]
         public Product product { get; set; }
         public int Quantity { get ; set ; }
+        [NotMapped]
         public double Price { get { return product.Price; } set { value = product.Price ; } }
+        [NotMapped]
         public double Total { get { return (Quantity * Price); } set { value = (Quantity * Price); } }
     }
 }

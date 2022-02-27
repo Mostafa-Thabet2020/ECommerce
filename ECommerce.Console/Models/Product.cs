@@ -13,6 +13,7 @@ namespace ECommerce.Console.Models
         public string ProductName { get; set; }
         public double Price { get; set; }
         public double? Cost { get; set; }
+        [NotMapped]
         public double? Profit { get { return Price - Cost; } set { value = Price - Cost; } }
         public bool IsDisplay { get; set; }
         public DateTime ProductionDate { get; set; }
