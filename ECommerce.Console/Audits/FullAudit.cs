@@ -9,6 +9,6 @@ namespace Audits
     public class FullAudit:Audit
     {
         public DateTime DeletedTime { get; set; }
-        public bool IsDelete { get; set; }
+        public bool IsDelete { get; set; } = false;
     }
 }

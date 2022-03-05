@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ECommerce.Console.Interfaces
+namespace ECommerce.Interfaces
 {
     public interface IInvoice
     {

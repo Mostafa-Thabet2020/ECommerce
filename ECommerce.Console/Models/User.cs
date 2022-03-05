@@ -1,4 +1,4 @@
-﻿using ECommerce.Console.Models;
+﻿using ECommerce.Models;
 using Parent;
 using System;
 using System.Collections.Generic;

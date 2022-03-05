@@ -5,9 +5,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ECommerce.Console.Models;
+using ECommerce.Models;
 
-namespace ECommerce.Console
+namespace ECommerce
 {
     public class EcommorceDbContext:DbContext
     {

@@ -1,8 +1,8 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using ConsoleServices;
-using ECommerce.Console;
-using ECommerce.Console.Consts;
-using ECommerce.Console.Models;
+using ECommerce;
+using ECommerce.Consts;
+using ECommerce.Models;
 using Microsoft.EntityFrameworkCore;
 using Models;
 using Parent;

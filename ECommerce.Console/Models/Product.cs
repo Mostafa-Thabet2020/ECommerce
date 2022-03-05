@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ECommerce.Console.Models
+namespace ECommerce.Models
 {
     public class Product:Audit
     {

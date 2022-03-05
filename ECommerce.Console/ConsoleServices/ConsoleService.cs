@@ -1,7 +1,7 @@
-﻿using ECommerce.Console.Consts;
-using ECommerce.Console.Models;
-using ECommerce.Console.Repository;
-using ECommerce.Console.Services;
+﻿using ECommerce.Consts;
+using ECommerce.Models;
+using ECommerce.Repository;
+using ECommerce.Services;
 using Models;
 using Services;
 using Shared;

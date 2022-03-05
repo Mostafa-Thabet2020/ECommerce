@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Models;
 using Repository;
 using Microsoft.EntityFrameworkCore;
-using ECommerce.Console;
+using ECommerce;
 
 namespace Services
 {

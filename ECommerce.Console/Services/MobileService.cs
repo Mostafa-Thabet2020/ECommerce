@@ -1,4 +1,4 @@
-﻿using ECommerce.Console;
+﻿using ECommerce;
 using Models;
 using Repository;
 using System;

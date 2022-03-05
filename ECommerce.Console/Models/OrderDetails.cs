@@ -1,5 +1,5 @@
 ﻿using Audits;
-using ECommerce.Console.Interfaces;
+using ECommerce.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ECommerce.Console.Models
+namespace ECommerce.Models
 {
     public class OrderDetails:Audit,IInvoice
     {

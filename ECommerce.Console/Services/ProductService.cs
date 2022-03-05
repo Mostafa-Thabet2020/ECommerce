@@ -1,12 +1,13 @@
-﻿using ECommerce.Console.Models;
-using ECommerce.Console.Repository;
+﻿using ECommerce;
+using ECommerce.Models;
+using ECommerce.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ECommerce.Console.Services
+namespace ECommerce.Services
 {
     public class ProductService : IProductRepository
     {
