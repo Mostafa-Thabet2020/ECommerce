@@ -1,4 +1,5 @@
 ﻿using ECommerce.Consts;
+using ECommerce.Models;
 using ECommerce.Repository;
 using ECommerce.Services;
 using Models;
@@ -34,7 +35,7 @@ namespace ECommerce.ConsoleServices
                     "1.Add to card\n" +
                     "2.show card\n" +
                     "3.track orders\n" +
-                    "4.Update order\n" +
+                    "4.Manged order\n" +
                     "5.Close\n\n");
                 Console.Beep();
                 int Action =Convert.ToInt16( Console.ReadLine());
@@ -50,7 +51,7 @@ namespace ECommerce.ConsoleServices
                         TrackOrders(user);
                         break;
                     case 4:
-                        UpdateOrder(user);
+                        MangeOrder(user);
                         break;
                     default:
                         break;
@@ -63,9 +64,9 @@ namespace ECommerce.ConsoleServices
 
         }
 
-        private static void UpdateOrder(User user)
+        private static void MangeOrder(User user)
         {
-            throw new NotImplementedException();
+            OrderConsoleService.HandleOrder(user);
         }
 
         private static void TrackOrders(User user)
@@ -81,6 +82,33 @@ namespace ECommerce.ConsoleServices
         private static void AddToCard(User user)
         {
             IOrderRepository orderService = new OrderService(user);
+            Order NewOrder = new Order();
+            NewOrder.UserID = user.Id;
+            List<OrderDetails> orderDetails = new List<OrderDetails>();
+
+            for(; ; )
+            {
+                IProductRepository productService = new ProductService();
+                OrderDetails orderDetail = new OrderDetails();
+                Console.WriteLine("Insert Product Id");
+                orderDetail.productId = Convert.ToInt16(Console.ReadLine());
+                Product product = productService.Get(orderDetail.productId);
+                orderDetail.Price = product.Price;
+                Console.WriteLine("Insert Quantity");
+                orderDetail.Quantity = Convert.ToInt16(Console.ReadLine());
+                orderDetails.Add(orderDetail);
+                Console.WriteLine("Insert new product ? true or false");
+                bool IsNewProduct = Convert.ToBoolean(Console.ReadLine());
+                if (!IsNewProduct)
+                {
+                    break;
+                }
+            }
+            NewOrder.orderDetails=orderDetails;
+            Console.WriteLine("Insert descriptation");
+            NewOrder.Descripation = Console.ReadLine();
+            orderService.Add(NewOrder);
+
         }
 
         private static void HandleOrderByAdmin(User user)

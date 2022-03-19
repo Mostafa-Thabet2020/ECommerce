@@ -1,4 +1,5 @@
-﻿using ECommerce.Consts;
+﻿using ECommerce.ConsoleServices;
+using ECommerce.Consts;
 using ECommerce.Models;
 using ECommerce.Repository;
 using ECommerce.Services;
@@ -21,10 +22,11 @@ namespace ConsoleServices
             Console.WriteLine($"Welcome {ProjectDetails.ProjectName}\n" +
                 $"{ProjectDetails.ProjectVersion}\n" +
                 $"{ProjectDetails.ProjectDescription}\n\n");
-            SeedDate();
+            SeedData();
             Console.WriteLine("Are you current user? true or false");
             bool IsCurrent = Convert.ToBoolean(Console.ReadLine());
             User user = new User();
+
             if (IsCurrent)
             {
                 user = LoginForm();
@@ -42,21 +44,24 @@ namespace ConsoleServices
                 user = RegisterUser();
             }
         }
-
-        private static void SeedDate()
+        /// <summary>
+        /// add lookups 
+        /// add Admin user
+        /// </summary>
+        private static void SeedData()
         {
             UserService userService = new UserService();
 
             User user = new User();
             UserRoleService userRoleService = new UserRoleService();
 
-            UserRole UserAmin = new UserRole();
-            UserAmin.Name = Admin.AdminRole;
-            userRoleService.Add(UserAmin);
+            UserRole AdminRole = new UserRole();
+            AdminRole.Name = Admin.AdminRole;
+            userRoleService.Add(AdminRole);
 
-            UserRole GeneralUser = new UserRole();
-            GeneralUser.Name = "GeneralUser";
-            userRoleService.Add(GeneralUser);
+            UserRole GeneralRole = new UserRole();
+            GeneralRole.Name = "GeneralUser";
+            userRoleService.Add(GeneralRole);
 
             if (!userService.IsExist(Admin.AdminName, Admin.AdminPassword))
             {
@@ -70,14 +75,25 @@ namespace ConsoleServices
                 userService.Add(user);
             }
             GovernroteService governroteService = new GovernroteService();
-            Governrote governrote = new Governrote();
-            governrote.Name = "Cairo";
-            governroteService.Add(governrote);
+            if (governroteService.IsEmpty())
+            {
+                // create look up for governrote if not exist
+                List<Governrote> governrotes = new List<Governrote>()
+                {
+                  new Governrote(){ Name="Cairo"},
+                  new Governrote(){ Name="Giza"},
+                  new Governrote(){ Name="Fiaom"},
+                  new Governrote(){ Name="Alex"},
+                  new Governrote(){ Name="Sharkia"},
+                };
+                governroteService.AddList(governrotes);
+            }
+
         }
 
-        private static void ViewCard()
+        private static void ViewCard(User user)
         {
-            throw new NotImplementedException();
+            OrderConsoleService.HandleOrder(user);
         }
 
 
@@ -136,7 +152,7 @@ namespace ConsoleServices
                     Console.WriteLine("Please insert number of action\n" +
                         "1. view products\n" +
                         "2. update profile\n" +
-                        "3. view card");
+                        "3. Orders");
                     int ActionNumber = Convert.ToInt32(Console.ReadLine());
                     switch (ActionNumber)
                     {
@@ -147,7 +163,7 @@ namespace ConsoleServices
                             UpdateProfile(user);
                             break;
                         case 3:
-                            ViewCard();
+                            ViewCard(user);
                             break;
                         default:
                             break;
@@ -170,7 +186,7 @@ namespace ConsoleServices
         }
         private static void AdminUserDealing(User user)
         {
-            
+
             Console.WriteLine($"Wellcome {user.FullName}!");
             for (; ; )
             {

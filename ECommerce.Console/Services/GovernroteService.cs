@@ -1,4 +1,5 @@
 ﻿using ECommerce;
+using ECommerce.Repository;
 using Models;
 using Repository;
 using System;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Services
 {
-    public class GovernroteService : IGenericCRUD<Governrote>,IValidation<Governrote>
+    public class GovernroteService : IGovernroteRepository
     {
         EcommorceDbContext dbContext = new EcommorceDbContext();
         public void Add(Governrote entity)
@@ -20,6 +21,12 @@ namespace Services
                 dbContext.governrotes.Add(entity);
                 dbContext.SaveChanges();
             }
+        }
+
+        public void AddList(List<Governrote> governrotes)
+        {
+            dbContext.governrotes.AddRange(governrotes);
+            dbContext.SaveChanges();
         }
 
         public void Delete(int Id)
@@ -46,6 +53,11 @@ namespace Services
         public List<Governrote> Get()
         {
             return dbContext.governrotes.ToList();
+        }
+
+        public bool IsEmpty()
+        {
+            return !dbContext.governrotes.Any();
         }
 
         public bool IsExist(Governrote entity)

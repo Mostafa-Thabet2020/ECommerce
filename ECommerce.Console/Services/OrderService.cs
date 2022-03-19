@@ -23,8 +23,10 @@ namespace ECommerce.Services
         {
             if (IsOrderValid(entity) && !IsExist(entity))
             {
+
                 entity.CreatedDate = DateTime.Now;
                 entity.UserID = user.Id;
+                
                 dbContext.orders.Add(entity);
                 dbContext.SaveChanges();
             }
@@ -83,7 +85,7 @@ namespace ECommerce.Services
 
         public bool IsOrderValid(Order entity)
         {
-            if (entity.IsDelete = false
+            if (entity.IsDelete == false
                 && entity.UserID > 0)
             {
                 return true;

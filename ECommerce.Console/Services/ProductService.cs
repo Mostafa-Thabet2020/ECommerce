@@ -73,6 +73,8 @@ namespace ECommerce.Services
             return dbContext.products.ToList();
         }
 
+       
+
         public bool IsExist(Product entity)
         {
             return dbContext.products.Any(x=>x.Id==entity.Id||x.ProductName==entity.ProductName);
