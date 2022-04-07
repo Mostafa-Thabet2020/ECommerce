@@ -298,18 +298,26 @@ namespace ConsoleServices
         {
             if (IsAdmin)
             {
-                Console.WriteLine($"id.{product.Id}\n" +
-                    $"product name {product.ProductName}\n" +
-                    $"cost {product.Cost}\n" +
-                    $"price {product.Price}\n" +
-                    $"display {product.IsDisplay}\n" +
-                    $"profit {product.Profit}\n \n");
+                DisplayProduct();
             }
             else
             {
                 Console.WriteLine($"id.{product.Id}\n" +
                    $"product name {product.ProductName}\n" +
                    $"price {product.Price}\n\n");
+            }
+        }
+        private static void DisplayProduct()
+        {
+            ProductService productService = new ProductService();
+            foreach (Product product in productService.GetAll())
+            {
+                Console.WriteLine($"id.{product.Id}\n" +
+                   $"product name {product.ProductName}\n" +
+                   $"cost {product.Cost}\n" +
+                   $"price {product.Price}\n" +
+                   $"display {product.IsDisplay}\n" +
+                   $"profit {product.Profit}\n \n");
             }
         }
         #endregion
